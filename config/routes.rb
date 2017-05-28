@@ -6,9 +6,13 @@ Rails.application.routes.draw do
   # end
 
   scope module: :v1, constraints: ApiVersion.new('v1', true) do
-    resources :spreadsheets, only: [:index, :show]
+    resources :spreadsheets, only: [:index, :show] do
+      post 'update', to: 'spreadsheets#update'
+      post 'upvote', to: 'spreadsheets#upvote'
+    end
   end
 
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to: 'users#create'
+  get 'user', to: 'users#show'
 end
