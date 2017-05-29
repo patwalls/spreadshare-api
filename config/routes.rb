@@ -6,9 +6,15 @@ Rails.application.routes.draw do
   # end
 
   scope module: :v1, constraints: ApiVersion.new('v1', true) do
-    resources :spreadsheets, only: [:index, :show] do
+    resources :spreadsheets, only: [:index, :create, :show] do
       post 'update', to: 'spreadsheets#update'
       post 'upvote', to: 'spreadsheets#upvote'
+      post 'destroy', to: 'spreadsheets#destroy'
+    end
+    resource :spreadsheets, only: [] do
+      get 'upvoted', to: 'spreadsheets#upvoted'
+      get 'created', to: 'spreadsheets#created'
+      get 'submitted', to: 'spreadsheets#submitted'
     end
   end
 
