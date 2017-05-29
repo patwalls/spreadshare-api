@@ -16,7 +16,7 @@ user_params = {
 user = User.create!(user_params)
 auth_token = AuthenticateUser.new(user.email, user.password).call
 
-user.spreadsheets.create!(
+s1 = user.spreadsheets.create!(
   title: 'My first spreadsheet',
   url: 'http://google.com',
   description: 'This is a description for my spreadsheet',
@@ -24,7 +24,17 @@ user.spreadsheets.create!(
   format: 'list'
 )
 
-user.spreadsheets.create!(
+s1.comments.create!(
+  body: 'This is a comment',
+  created_by: user.id
+)
+
+s1.comments.create!(
+  body: 'This is another comment',
+  created_by: user.id
+)
+
+s2 = user.spreadsheets.create!(
   title: 'Another fun spreadsheet',
   url: 'http://google.com',
   description: 'A fun description',
@@ -32,10 +42,25 @@ user.spreadsheets.create!(
   format: 'list'
 )
 
-user.spreadsheets.create!(
+s2.comments.create!(
+  body: 'This is also a comment',
+  created_by: user.id
+)
+
+s3 = user.spreadsheets.create!(
   title: 'The best spreadsheet of all',
   url: 'http://google.com',
   description: 'This is a description for my spreadsheet',
   category: 'Finance',
   format: 'list'
 )
+
+t1 = Tag.create!(name: 'people')
+t2 = Tag.create!(name: 'finance')
+t3 = Tag.create!(name: 'product')
+
+SpreadsheetsTag.create!(spreadsheet_id: s1.id, tag_id: t1.id)
+SpreadsheetsTag.create!(spreadsheet_id: s2.id, tag_id: t2.id)
+SpreadsheetsTag.create!(spreadsheet_id: s3.id, tag_id: t1.id)
+SpreadsheetsTag.create!(spreadsheet_id: s3.id, tag_id: t2.id)
+SpreadsheetsTag.create!(spreadsheet_id: s3.id, tag_id: t3.id)

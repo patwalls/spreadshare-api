@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170529022410) do
+ActiveRecord::Schema.define(version: 20170529211437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,21 @@ ActiveRecord::Schema.define(version: 20170529022410) do
     t.string "category"
     t.string "format"
     t.index ["user_id"], name: "index_spreadsheets_on_user_id"
+  end
+
+  create_table "spreadsheets_tags", force: :cascade do |t|
+    t.integer "spreadsheet_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["spreadsheet_id"], name: "index_spreadsheets_tags_on_spreadsheet_id"
+    t.index ["tag_id"], name: "index_spreadsheets_tags_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "upvotes", force: :cascade do |t|
