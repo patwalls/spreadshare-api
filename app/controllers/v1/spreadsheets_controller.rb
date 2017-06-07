@@ -1,6 +1,7 @@
 module V1
   class SpreadsheetsController < ApplicationController
     before_action :set_spreadsheet, only: [:show]
+    skip_before_action :authorize_request
 
     # GET /spreadsheets
     def index
