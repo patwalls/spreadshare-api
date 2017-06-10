@@ -4,11 +4,11 @@ class SpreadsheetSerializer < ActiveModel::Serializer
 
   # model associations -> return collections
   belongs_to :user
-  has_many :comments
+  # has_many :comments
   has_many :upvotes
 
   # custom attributes
-  attributes :upvotes_count, :upvoted, :submitted, :created, :tag_names
+  attributes :upvotes_count, :tag_names, :contributors, :creators, :related_spreadsheets
 
   def tag_names
     object.tags.map(&:name)
@@ -18,15 +18,29 @@ class SpreadsheetSerializer < ActiveModel::Serializer
     object.upvotes.count
   end
 
-  def upvoted
-    object.upvotes.where(user_id: current_user.id).any?
+  # def upvoted
+  #   object.upvotes.where(user_id: current_user.id).any?
+  # end
+  #
+  # def submitted
+  #   object.user_id == current_user.id
+  # end
+  #
+  # def created
+  #   object.user_id == current_user.id
+  # end
+
+  def contributors
+    [{name: 'Pat Walls', url: 'http://google.com'}]
   end
 
-  def submitted
-    object.user_id == current_user.id
+  def creators
+    [{name: 'Pat Walls', url: 'http://google.com'}]
   end
 
-  def created
-    object.user_id == current_user.id
+  def related_spreadsheets
+    Spreadsheet
+      .where(category: object.category)
+      .where('id != ?', object.id)
   end
 end

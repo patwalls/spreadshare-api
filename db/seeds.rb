@@ -21,7 +21,8 @@ s1 = user.spreadsheets.create!(
   url: 'http://google.com',
   description: 'This is a description for my spreadsheet',
   category: 'Finance',
-  format: 'list'
+  format: 'list',
+  live: true
 )
 
 s1.comments.create!(
@@ -39,7 +40,8 @@ s2 = user.spreadsheets.create!(
   url: 'http://google.com',
   description: 'A fun description',
   category: 'People',
-  format: 'list'
+  format: 'list',
+  live: true
 )
 
 s2.comments.create!(
@@ -52,7 +54,17 @@ s3 = user.spreadsheets.create!(
   url: 'http://google.com',
   description: 'This is a description for my spreadsheet',
   category: 'Finance',
-  format: 'list'
+  format: 'list',
+  live: true
+)
+
+s4 = user.spreadsheets.create!(
+  title: 'Another finance spreadsheet',
+  url: 'http://google.com',
+  description: 'This is a description for my spreadsheet',
+  category: 'Finance',
+  format: 'list',
+  live: true
 )
 
 t1 = Tag.create!(name: 'people')
@@ -64,3 +76,4 @@ SpreadsheetsTag.create!(spreadsheet_id: s2.id, tag_id: t2.id)
 SpreadsheetsTag.create!(spreadsheet_id: s3.id, tag_id: t1.id)
 SpreadsheetsTag.create!(spreadsheet_id: s3.id, tag_id: t2.id)
 SpreadsheetsTag.create!(spreadsheet_id: s3.id, tag_id: t3.id)
+SpreadsheetsTag.create!(spreadsheet_id: s4.id, tag_id: t3.id)

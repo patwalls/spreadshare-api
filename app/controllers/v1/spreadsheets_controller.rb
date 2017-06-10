@@ -5,7 +5,7 @@ module V1
 
     # GET /spreadsheets
     def index
-      @spreadsheets = Spreadsheet.all
+      @spreadsheets = Spreadsheet.live
       json_response(@spreadsheets)
     end
 
@@ -29,7 +29,7 @@ module V1
 
     # POST /spreadsheets, returns spreadsheet object
     def create
-      @spreadsheet = current_user.spreadsheets.create!(spreadsheet_params)
+      @spreadsheet = SpreadsheetCreator.new(params).create!
       json_response(@spreadsheet)
     end
 
@@ -65,8 +65,18 @@ module V1
       @spreadsheet = Spreadsheet.find(params[:id])
     end
 
-    def spreadsheet_params
-      params.require(:spreadsheet).permit(:title, :description, :url)
-    end
+    # def spreadsheet_params
+    #   params
+    #     .permit(
+    #       :title,
+    #       :description,
+    #       :url,
+    #       :category,
+    #       :creator,
+    #       :submitter,
+    #       :email,
+    #       :tags
+    #     )
+    # end
   end
 end
